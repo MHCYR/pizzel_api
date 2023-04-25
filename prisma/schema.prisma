@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  portfolios Portfolio[]
+  canvases  Canvas[]
+}
+
+model Portfolio {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  canvases  Canvas[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Canvas {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sketch    Json     @default("{}")
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolioId String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
