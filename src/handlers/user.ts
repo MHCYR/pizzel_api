@@ -3,6 +3,7 @@ import { hashPassword, createJWT, comparePassword } from "../modules/auth";
 import { Request, Response } from "express";
 
 export const createUser = async (req: Request, res: Response) => {
+  // TODO: sanitize input email and password
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400).json({ error: "Please provide an email and password" });
