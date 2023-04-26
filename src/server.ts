@@ -7,6 +7,7 @@ import {
   validateUser,
   validateLogin,
 } from "./routes/validations";
+import { protect } from "./modules/auth";
 
 const app: Express = express();
 app.use(morgan("dev"));
@@ -15,6 +16,6 @@ app.use(express.urlencoded({ extended: true })); // creates an object from the r
 
 app.post("/user", validateUser, handleIputErrors, createUser);
 app.post("/login", validateLogin, handleIputErrors, loginUser);
-app.use("/api", router);
+app.use("/api", protect, router);
 
 export default app;
