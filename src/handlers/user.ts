@@ -22,9 +22,10 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const loginUser = async (req: Request, res: Response) => {
+  const data = matchedData(req);
   const user = await prisma.user.findUnique({
     where: {
-      email: req.body.email,
+      email: data.email,
     },
   });
 
@@ -33,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
     return;
   }
 
-  const valid = await comparePassword(req.body.password, user.password);
+  const valid = await comparePassword(data.password, user.password);
   if (!valid) {
     res.status(400).json({ error: "Invalid password" });
     return;

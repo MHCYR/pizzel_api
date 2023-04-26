@@ -1,12 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
 
-export const validateUser = [
-  body("email").trim().isEmail(),
-  body("password").trim().isLength({ min: 8 }).isAlphanumeric(),
-  body("name").optional().isString().isLength({ max: 10 }),
-];
-
 export const handleIputErrors = (
   req: Request,
   res: Response,
@@ -19,3 +13,14 @@ export const handleIputErrors = (
     next();
   }
 };
+
+export const validateUser = [
+  body("email").trim().isEmail(),
+  body("password").trim().isLength({ min: 8 }).isAlphanumeric(),
+  body("name").optional().isString().isLength({ max: 10 }),
+];
+
+export const validateLogin = [
+  body("email").trim().isEmail(),
+  body("password").trim().isLength({ min: 8 }).isAlphanumeric(),
+];
