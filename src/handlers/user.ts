@@ -1,19 +1,19 @@
 import prisma from "../db";
 import { hashPassword, createJWT, comparePassword } from "../modules/auth";
 import { Request, Response } from "express";
+import { matchedData } from "express-validator";
 
 export const createUser = async (req: Request, res: Response) => {
-  // TODO: sanitize input email and password
-  const { email, password } = req.body;
+  const { email, password, name } = matchedData(req);
   if (!email || !password) {
     res.status(400).json({ error: "Please provide an email and password" });
     return;
   }
   const user = await prisma.user.create({
     data: {
-      email: req.body.email,
-      name: req.body.name,
-      password: await hashPassword(req.body.password),
+      email,
+      name,
+      password: await hashPassword(password),
     },
   });
 
