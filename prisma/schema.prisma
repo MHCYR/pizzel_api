@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String?
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
   portfolios Portfolio[]
-  canvases  Canvas[]
+  canvases   Canvas[]
 }
 
 model Portfolio {
@@ -29,16 +29,18 @@ model Portfolio {
   canvases  Canvas[]
   user      User     @relation(fields: [userId], references: [id])
   userId    String
+
+  @@unique([id, userId])
 }
 
 model Canvas {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sketch    Json     @default("{}")
-  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+  id          String    @id @default(uuid())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  sketch      Json      @default("{}")
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
   portfolioId String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
 }
