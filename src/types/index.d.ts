@@ -1,4 +1,9 @@
-export {};
+import { JwtPayload } from "jsonwebtoken";
+
+export interface MyJwtPayload extends JwtPayload {
+  id: string;
+  email: string;
+}
 
 declare global {
   namespace Express {
@@ -6,7 +11,7 @@ declare global {
       headers: {
         authorization: string;
       };
-      user: string;
+      user: MyJwtPayload;
     }
   }
 }

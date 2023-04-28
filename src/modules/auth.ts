@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
+import { MyJwtPayload } from "../types";
 
 export const comparePassword = (password: string, hash: string) => {
   return bcrypt.compare(password, hash);
@@ -35,8 +36,7 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = user as string;
-    console.log(user);
+    req.user = user as MyJwtPayload;
     next();
   } catch (error) {
     console.error(error);

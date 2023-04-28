@@ -1,17 +1,22 @@
 import { Router, Request, Response } from "express";
+import {
+  createPortfolio,
+  deletePortfolio,
+  getAllPortfolios,
+  getSinglePortfolio,
+  updatePortfolio,
+} from "../handlers/portfolio";
 
 const router = Router();
 
 /*
  * Portfolio routes
  */
-router.get("/portfolio", (req: Request, res: Response) => {
-  res.json({ message: "Hello from /portfolio" });
-});
-router.get("/portfolio/:id", (req: Request, res: Response) => {});
-router.post("/portfolio", (req: Request, res: Response) => {});
-router.put("/portfolio/:id", (req: Request, res: Response) => {});
-router.delete("/portfolio/:id", (req: Request, res: Response) => {});
+router.get("/portfolio", getAllPortfolios);
+router.get("/portfolio/:id", getSinglePortfolio);
+router.post("/portfolio", createPortfolio);
+router.put("/portfolio/:id", updatePortfolio);
+router.delete("/portfolio/:id", deletePortfolio);
 
 /*
  * Canvas routes
