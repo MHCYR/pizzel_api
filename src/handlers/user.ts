@@ -4,9 +4,7 @@ import { Request, Response } from "express";
 import { matchedData } from "express-validator";
 
 export const createUser = async (req: Request, res: Response) => {
-  console.log("createUser");
   const { email, password, name } = matchedData(req);
-  console.log(email, password, name);
   if (!email || !password) {
     res.status(400).json({ error: "Please provide an email and password" });
     return;
