@@ -8,11 +8,13 @@ import {
   validateLogin,
 } from "./routes/validations";
 import { protect } from "./modules/auth";
+import cors from "cors";
 
 const app: Express = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // creates an object from the request url
+app.use(cors());
 
 app.post("/user", validateUser, handleIputErrors, createUser);
 app.post("/login", validateLogin, handleIputErrors, loginUser);
