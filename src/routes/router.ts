@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import {
   createPortfolio,
   deletePortfolio,
@@ -6,6 +6,13 @@ import {
   getSinglePortfolio,
   updatePortfolio,
 } from "../handlers/portfolio";
+import {
+  createCanvas,
+  deleteCanvas,
+  getAllCanvases,
+  getCanvas,
+  updateCanvas,
+} from "../handlers/canvas";
 
 const router = Router();
 
@@ -21,9 +28,10 @@ router.delete("/portfolio/:id", deletePortfolio);
 /*
  * Canvas routes
  */
-router.get("/canvas/:id", (req: Request, res: Response) => {});
-router.post("/canvas", (req: Request, res: Response) => {});
-router.put("/canvas/:id", (req: Request, res: Response) => {});
-router.delete("/canvas/:id", (req: Request, res: Response) => {});
+router.get("/canvas", getAllCanvases);
+router.get("/canvas/:id", getCanvas);
+router.post("/canvas", createCanvas);
+router.put("/canvas/:id", updateCanvas);
+router.delete("/canvas/:id", deleteCanvas);
 
 export default router;
