@@ -38,9 +38,11 @@ model Canvas {
   name        String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  sketch      Json      @default("{}")
+  sketch      Json?
   portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
   portfolioId String
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+
+  @@unique([id, userId])
 }
