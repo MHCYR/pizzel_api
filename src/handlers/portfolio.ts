@@ -14,9 +14,6 @@ export const getAllPortfolios = async (
           email,
         },
       },
-      include: {
-        canvases: true,
-      },
     });
     res.json({ data: portfolios });
   } catch (error) {
@@ -34,6 +31,9 @@ export const getSinglePortfolio = async (
     const portfolio = await prisma.portfolio.findUnique({
       where: {
         id,
+      },
+      include: {
+        canvases: true,
       },
     });
 
