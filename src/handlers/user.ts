@@ -3,17 +3,22 @@ import { hashPassword, createJWT, comparePassword } from "../modules/auth";
 import { Request, Response } from "express";
 import { matchedData } from "express-validator";
 
+/*
+ * Open endpoints
+ * Allows new users to register
+ * Request must contain:
+ * @param {string} email - user's email
+ * @param {string} password - user's password
+ * @param {string} name[optional] - user's name
+ * @returns {string} token - JWT (required to access protected endpoints)
+ */
 export const createUser = async (req: Request, res: Response) => {
-  const { email, password, name } = matchedData(req);
-  if (!email || !password) {
-    res.status(400).json({ error: "Please provide an email and password" });
-    return;
-  }
+  const { email, password, name } = matchedData(req); // retrieve validated data from the request object
   const user = await prisma.user.create({
     data: {
       email,
       name,
-      password: await hashPassword(password),
+      password: await hashPassword(password), // hash the password before storing it in the database
     },
   });
 
@@ -21,8 +26,16 @@ export const createUser = async (req: Request, res: Response) => {
   res.json({ token });
 };
 
+/*
+ * Open endpoints
+ * Allows existing users to login
+ * Request must contain:
+ * @param {string} email - user's email
+ * @param {string} password - user's password
+ * @returns {string} token - JWT (required to access protected endpoints)
+ */
 export const loginUser = async (req: Request, res: Response) => {
-  const data = matchedData(req);
+  const data = matchedData(req); // retrieve validated data from the request object
   const user = await prisma.user.findUnique({
     where: {
       email: data.email,

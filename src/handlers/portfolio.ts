@@ -1,6 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import prisma from "../db";
 
+/*
+ * get all portfolios of a user
+ * @param {Request} req
+ * @param {Request} req.user - user data assigned on login
+ * @param {string} req.user.email - user email
+ * @param {Response} res
+ * @param {object[]} res.data - array of portfolios
+ */
 export const getAllPortfolios = async (
   req: Request,
   res: Response,
@@ -17,10 +25,20 @@ export const getAllPortfolios = async (
     });
     res.json({ data: portfolios });
   } catch (error) {
-    next(error);
+    next(error); // pass error to express error handler
   }
 };
 
+/*
+ * get a single portfolio from a user
+ * @param {Request} req
+ * @param {Request} req.user - user data assigned on login
+ * @param {string} req.user.email - user email
+ * @param {Response} res
+ * @param {object} res.data - portfolio object
+ * @param {object[]} res.data.canvases - array of canvas objects
+ */
+// TODO: verify user owns portfolio
 export const getSinglePortfolio = async (
   req: Request,
   res: Response,
@@ -43,6 +61,14 @@ export const getSinglePortfolio = async (
   }
 };
 
+/*
+ * create a portfolio for a user
+ * @param {Request} req
+ * @param {Request} req.user - user data assigned on login
+ * @param {string} req.body.name - name of portfolio
+ * @param {Response} res
+ * @param {object} res.data - portfolio object
+ */
 export const createPortfolio = async (
   req: Request,
   res: Response,
@@ -63,6 +89,15 @@ export const createPortfolio = async (
   }
 };
 
+/*
+ * update a portfolio name
+ * @param {Request} req
+ * @param {Request} req.user - user data assigned on login
+ * @param {string} req.params.id - portfolio id
+ * @param {string} req.body.name - new name of portfolio
+ * @param {Response} res
+ * @param {object} res.data - portfolio object
+ */
 export const updatePortfolio = async (
   req: Request,
   res: Response,
@@ -90,6 +125,14 @@ export const updatePortfolio = async (
   }
 };
 
+/* deletes a portfolio
+ * @param {Request} req
+ * @param {object} req.user - user data assigned on login
+ * @param {string} req.user.id - user id
+ * @param {string} req.params.id - portfolio id
+ * @param {Response} res
+ * @param {object} res.data - portfolio object
+ */
 export const deletePortfolio = async (
   req: Request,
   res: Response,

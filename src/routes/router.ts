@@ -14,6 +14,12 @@ import {
   updateCanvas,
 } from "../handlers/canvas";
 
+/*
+ ********************
+ * PROTECTED ROUTES *
+ ********************
+ */
+
 const router = Router();
 
 /*
